@@ -1,0 +1,32 @@
+from unicodedata import name
+from django.urls import path
+from .views import *
+urlpatterns = [
+    path('', DashboardView.as_view(), name='dashboard'),
+    path('about/', AboutView.as_view(), name='about'),
+    path('what-i-do/', WhatIdoView.as_view(), name='whatido'),
+    path('add-what-i-do/', WhatIdoAddView.as_view(), name='addwhatido'),
+    path('what-i-do-settings/', WhatIdoSettingsView.as_view(), name='whatidosettings'),
+    path('delete-skill/', DeleteSkill.as_view(), name='delete_skill'),
+    path('edit-skill/<slug:slug>/', EditSkill.as_view(), name='edit_skill'),
+    path('view-project/', ViewProjectView.as_view(), name='viewproject'),
+    path('add-project/', AddProjectView.as_view(), name="addproject"), 
+    path('delete-project/', DeleteProjectView.as_view(), name='deleteproject'),
+    path('project-setting/', ProjectSettingView.as_view(), name="projectsetting"),
+    path('edit-project/<slug:slug>/', ProjectEditView.as_view(), name="editproject"),
+    path('categories/', CategoriesView.as_view(), name= "categories"),
+    path('delete-category/', DeleteCategoryView.as_view(), name='deletecategory'),
+    path('add-blog/', AddBlogView.as_view(), name='addblog'),
+    path('view-blog/', ViewBlogView.as_view(), name='viewblog'),
+    path('edit-blog/<slug:slug>/', EditBlogView.as_view(), name='editblog'),
+    path('messages/', MessagesDashboardView.as_view(), name='messagesdashboard'),
+    path('navbar-settings/', NavbarDashboardView.as_view(), name='navbardashboard'),
+    path('read-message/<int:pk>', ReadMessageDashboardView.as_view(), name='readmessage'),
+    path('seo-setting/', SeoSettingDashboardView.as_view(), name='seosetting'),
+    path('dashboard-email/', EmailDashboardView.as_view(), name='dashboardemail'),
+    path('dashboard-logout/', LogoutDashboardView.as_view(), name='dashboardlogout'),
+    path('dashboard-testimonials/', TestimonialsDashboardView.as_view(), name='testimonialsdashboard'),
+    path('dashboard-testimonials-status-change/<int:pk>', statuschange, name='statuschange'),
+    path('dashboard-visitors/', VisitorsDashboardView.as_view(), name='visitorsdashboard'),
+    path('dashboard-visitors/more-info/<int:pk>', VisitorMoreInfoDashboardView.as_view(), name='moreinfo'),
+]

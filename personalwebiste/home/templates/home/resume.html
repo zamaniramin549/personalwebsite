@@ -1,0 +1,292 @@
+{% extends 'front/master.html' %}
+{% load static %}
+{% block metadata %}
+    <meta name="keywords" content="{{seo.keywords}}">
+    <meta property="og:title" content="Resume" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ramzamani.com{{request.path}}" />
+    <meta property="og:image" content="https://www.ramzamani.com{{seo.image.url}}/" />
+    <meta property="og:image:alt" content="{{seo.sitename}}">
+    <meta name="description" property="og:description" content="{{seo.description}}">
+    <meta property="og:site_name" content="{{seo.sitename}}">
+{% endblock %}
+{% block titile %}Resume{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Navbar PC -->
+        <div class="col-2 bg-dark sticky-top d-block-m" style="height: 100vh;z-index: 3;overflow-y: auto;">
+            {% include "home/includes/navbar.html" %}
+        </div>
+
+
+        <div class="col-10 col-m">
+            <div class="row d-flex">
+                <!-- Navbar Mobile -->
+                <div class="col-md-12 p-0 sticky-top" style="z-index: 3;">
+                    <nav class="navbar navbar-light p-3 d-block-m-nav">
+                        <div class="container-fluid p-0">
+                            <div class="col-md-6">
+                                <!-- <span class="navbar-brand mb-0 h1">Navbar</span> -->
+                            </div>
+                            <div class="col-md-6 with-nav-mobile">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                                    <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel"></h5>
+                                    <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body text-white">
+                                        {% include "home/includes/navbar.html" %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                
+
+                <div class="col-md-12 p-5-style mt-mobile" style="background-color: #f7f7f7;">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-7 text-center">
+                                <div class="tagline mb-3" style="font-size: 32px;">Resume</div> 
+                                <a href="{% url 'resumepdfgenerate' %}" class="btn btn-primary margin-bottom-style" target="_blank"><i class="fas fa-download"></i> Download Resume</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 p-5-style margin-top-style">
+                    <div class="card border-0 shadow p-5 pm">
+                        <div class="card-body">
+
+
+                            <div class="row">
+                                <div class="col-md-9 border-end">
+                                    <h1 class="section-title-name margin-top-style">{{resume_header.full_name}}</h1>
+                                    <div class="tagline mb-3">{{resume_header.position}}</div>
+                                </div>
+                                <div class="col-md-3 card-text">
+                                    {% if resume_header.phone %}
+                                        <div class="mb-2">
+                                            <a href="#"><i class="fas fa-phone-square-alt"></i> {{resume_header.phone}}</a>
+                                        </div>
+                                    {% endif %}
+                                    {% if resume_header.email %}
+                                        <div class="mb-2">
+                                            <a href="#"><i class="fas fa-envelope-square"></i> {{resume_header.email}}</a>
+                                        </div>
+                                    {% endif %}
+                                    {% if resume_header.website %}
+                                        <div class="mb-2">
+                                            <a href="#"><i class="fas fa-globe"></i> {{resume_header.url_text}}</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+
+                            <hr/>
+
+
+                            <div class="row d-flex align-items-center justify-content-center mt-4 mb-4">
+                                <div class="col-md-2 center">
+                                    <img src="{{resume_about.image.url}}" height="130" width="130" style="border-radius: 100px;">
+                                </div>
+                                <div class="col-md-10 margin-top-style card-text">
+                                    {{resume_about.about|linebreaks}} 
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <div class="row">
+
+                                
+                                <div class="col-md-9 border-end">
+                                    {% if work_exper %}
+                                        <h5 class="section-title-resume margin-top-style mb-4">WORK EXPERIENCES</h5>
+
+
+                                        {% for work_exper in work_exper %}
+                                            <div class="row mt-4 card-text">
+                                                <div class="col-md-8 col-12 fw-bold">
+                                                    {{work_exper.title}}
+                                                </div>
+                                                <div class="col-md-4 col-12 d-flex justify-content-end justify-content-start">
+                                                    <small class="text-muted">{{work_exper.company_name}} | {{work_exper.duration}}</small>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    {{work_exper.content|linebreaks}}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+
+                                    {% if projects %}
+                                        <h5 class="section-title-resume margin-top-style mb-4">PROJECTS</h5>
+
+                                        {% for project in projects %}
+                                            <div class="row mt-4 card-text">
+                                                <div class="col-md-7 col-12 fw-bold">
+                                                    {{project.project_name}}
+                                                </div>
+                                                <div class="col-md-5 col-12 d-flex justify-content-end justify-content-start">
+                                                    {% if project.website %}
+                                                        <small class="text-muted"><a href="{{project.website}}" target="_blank">{{project.url_text}}</a></small>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col-md-12">
+                                                    {{project.content|linebreaks}}                                            </div>
+                                                </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                  
+
+
+
+                                </div>
+
+
+                                <div class="col-md-3">
+                                    <h5 class="section-title-resume margin-top-style">SKILLS</h5>
+
+                                    {% if resume_technical_skills.skills %}
+                                        <div class="row mt-4 card-text">
+                                            <div class="col-md-12 fw-bold">
+                                                Technical
+                                            </div>
+                                            <div class="col-md-12">
+                                                {{resume_technical_skills.skills|linebreaks}}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if resume_professional_skills.skills %}
+                                        <div class="row mt-4 card-text">
+                                            <div class="col-md-12 fw-bold">
+                                                Professional
+                                            </div>
+                                            <div class="col-md-12">
+                                                {{resume_professional_skills.skills|linebreaks}}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if resume_educations %}
+                                        <h5 class="section-title-resume margin-top-style mt-5">EDUCATION</h5>
+                                        {% for resume_education in resume_educations %}
+                                            <div class="row mt-4 card-text">
+                                                <div class="col-md-12">
+                                                    {{resume_education.subject}}
+                                                </div>
+                                                <div class="col-md-12 text-muted">
+                                                    {{resume_education.university}}
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <small class="text-muted">
+                                                        {{resume_education.year}}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+
+
+                                    {% if resume_awards %}        
+                                        <h5 class="section-title-resume margin-top-style mt-5">AWARDS</h5>
+                                        {% for resume_award in resume_awards %}
+                                            <div class="row mt-4 card-text">
+                                                <div class="col-md-12">
+                                                    {{resume_award.award}}
+                                                </div>
+                                                <div class="col-md-12 text-muted">
+                                                    {{resume_award.award_title}}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+
+                                    {% if resume_langs %}
+                                        <h5 class="section-title-resume margin-top-style mt-5 mb-4">LANGUAGES</h5>
+                                        {% for resume_lang in resume_langs %}
+                                            <div class="row mt-2 card-text">
+                                                <div class="col-md-12">
+                                                    {{resume_lang.language}}
+                                                    <small class="text-muted">
+                                                        ({{resume_lang.language_level}})
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                            
+
+                                    {% if resume_interest.interests %}
+                                        <h5 class="section-title-resume margin-top-style mt-5 mb-4">INTERESTS</h5>
+                                        {% for resume_interest in resume_interest.splits %}
+                                        <div class="row mt-2 card-text">
+                                            <div class="col-md-12">
+                                                {{resume_interest}}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- <hr/> -->
+
+                            <!-- <div class="row mt-5 d-none d-sm-block card-text">
+                                <div class="col-md-12 d-flex align-items-center justify-content-center">
+                                    <span style="display: inline-block; margin-right: 20px;">
+                                        <i class="fab fa-linkedin fa-lg"></i>
+                                        <a href="#" class="text-muted" style="margin-left: 6px;"> www.linkedin.com</a>
+                                    </span> 
+                                    
+                                    <span style="display: inline-block; margin-right: 20px;">
+                                        <i class="fab fa-twitter-square fa-lg"></i>
+                                        <a href="#" class="text-muted" style="margin-left: 6px;"> www.twitter.com</a>
+                                    </span>
+
+                                    <span style="display: inline-block; margin-right: 20px;">
+                                        <i class="fab fa-facebook-square fa-lg"></i>
+                                        <a href="#" class="text-muted" style="margin-left: 6px;"> www.facebook.com</a>
+                                    </span>
+
+                                    <span style="display: inline-block; margin-right: 20px;">
+                                        <i class="fab fa-instagram fa-lg"></i>
+                                        <a href="#" class="text-muted" style="margin-left: 6px;"> www.instagram.com</a>
+                                    </span>
+                                </div>
+                            </div> -->
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

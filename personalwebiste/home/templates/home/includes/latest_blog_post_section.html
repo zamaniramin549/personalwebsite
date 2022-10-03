@@ -1,0 +1,81 @@
+{% load static %}
+{% load humanize %}
+<div class="col-md-12 p-5-style">
+    <div class="container">
+        {% if blogs %}
+        {% if request.path == "/" %}
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="section-title margin-top-style">Latest Blog Posts</h2>
+            </div>
+        </div>
+        {% elif request.path != "/all-blogs/" %}
+          {% for category in categories %}
+            {% if category.slug == get_category.slug %} 
+              <div class="row">
+                <div class="col-md-12">
+                    <h2 class="section-title margin-top-style text-capitalize">{{category.slug}} Blog Posts</h2>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <div class="row">
+            <div class="col-md-12">
+                <h2 class="section-title margin-top-style">All Blog Posts</h2>
+            </div>
+          </div>
+        {% endif %}
+        <div class="row mt-4 mb-4 infinite-container" id="myUL">
+
+            {% for blog in blogs %}
+            <div class="col-md-4 mb-4 infinite-item">
+                <div class="card h-100 card-bg border-0">
+                    <img src="{{blog.image.url}}" class="card-img-top">
+                    <div class="card-body">
+                      <h5 class="card-title">{{blog.title}}</h5>
+                      <p class="card-text">{{blog.short_content|truncatechars:160}}</p>
+                      <a href="{{blog.get_absolute_url}}" class=""><small>Read More <i class="fas fa-arrow-right fa-xs"></i></small></a>
+                    </div>
+                    <div class="card-footer card-bg border-0">
+                      <small class="text-muted">Last updated {{blog.date_updated|naturaltime}}</small>
+                    </div>
+                  </div>
+            </div>
+            {% endfor %}
+            {% if blogs.has_next %}
+                <a class="infinite-more-link" href="?page={{ blogs.next_page_number }}">More</a>
+            {% endif %}
+
+            <div class="loading" style="display: none;">
+                <div class="text-center">
+                    <div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <script>
+                var infinite = new Waypoint.Infinite({
+                  element: $('.infinite-container')[0],
+                  onBeforePageLoad: function () {
+                    $('.loading').show();
+                  },
+                  onAfterPageLoad: function ($items) {
+                    $('.loading').hide();
+                  }
+                });
+              </script>
+            {% if request.path != "/all-blogs/" %}
+            <div class="col-md-12 text-center mt-4">
+                <a class="btn btn-dark" href="{% url 'allblogs' %}"><i class="fas fa-arrow-circle-right"></i> View All Blogs</a>
+            </div>
+            {% endif %}
+
+        </div>
+        {% else %}
+        <div class="col-md-12 text-center mt-4">
+            <a class="btn btn-dark" href="{% url 'home' %}"><i class="fas fa-arrow-circle-right"></i> Back home</a>
+        </div>
+        {% endif %}
+    </div>
+</div>

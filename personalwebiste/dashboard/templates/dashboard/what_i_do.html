@@ -1,0 +1,124 @@
+{% extends 'dashboard/master.html' %}
+{% load static %}
+
+{% block title %}Dashboard | What I do{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+
+    <!-- Navbar -->
+    {% include "dashboard/includes/top_navbar.html" %}
+    <!-- Main Sidebar Container -->
+    {% include "dashboard/includes/left_navbar.html" %}
+    
+  
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">What I do</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashbaord</a></li>
+                <li class="breadcrumb-item active">What I do</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+  
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  {% if skills %}
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>skill</th>
+                        <th>Level</th>
+                        <th>Image</th>
+                        <th>Created date</th>
+                        <th>Last update</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for skill in skills %}
+                      <tr data-widget="expandable-table" aria-expanded="false">
+                        <td>{{forloop.counter}}</td>
+                        <td>{{skill.skill}}</td>
+                        <td>{{skill.level}}</td>
+                        <td><img src="{{skill.image.url}}" height="50" /></td>
+                        <td>{{skill.date_add}}</td>
+                        <td>{{skill.date_update}}</td>
+                        <td>
+                          <form method="post" action="{% url 'delete_skill' %}">{% csrf_token %}
+                            <input type="hidden" name="skill_id" value="{{skill.id}}">
+                            <button class="btn btn-danger">Delete</button>
+                          </form>
+                          <a href="{% url 'edit_skill' skill.slug %}" class="btn btn-info">Edit</a>
+                        </td>
+                      </tr>
+                      <tr class="expandable-body">
+                        <td colspan="7">
+                          <p>
+                            {{skill.description}}
+                          </p>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  {% else %}
+                    <h6>There is no skill added. Click <a href="{% url 'addwhatido' %}">here</a> to add</h6>
+                  {% endif %}
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.content -->
+
+
+
+
+    </div>
+
+
+
+  
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+  
+    <!-- Main Footer -->
+    {% include "dashboard/includes/footer.html" %}
+  </div>
+{% endblock %}
+
+
+
+{% block image %}
+<script>
+    var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+{% endblock %}

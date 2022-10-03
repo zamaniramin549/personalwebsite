@@ -1,0 +1,111 @@
+{% extends 'dashboard/master.html' %}
+{% load static %}
+
+{% block title %}Dashboard | Edit {{get_project.project_name}}{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+
+    <!-- Navbar -->
+    {% include "dashboard/includes/top_navbar.html" %}
+    <!-- Main Sidebar Container -->
+    {% include "dashboard/includes/left_navbar.html" %}
+    
+  
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Edit {{get_project.project_name}}</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashbaord</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'viewproject' %}">Projects</a></li>
+                <li class="breadcrumb-item active">Edit {{get_project.project_name}}</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+  
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                   
+                   
+                        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                            <input class="form-control mb-3" type="text" name="project_name" placeholder="Project name *" required value="{{get_project.project_name}}">
+                            <input class="form-control mb-3" type="text" name="industry" placeholder="Industry *" required value="{{get_project.industry}}">
+                            <input class="form-control mb-3" type="text" name="short_description" placeholder="Short description *" required value="{{get_project.short_description}}">
+                            <input class="form-control mb-3" type="url" name="website" placeholder="Website" value="{{get_project.website}}">
+                            <input class="form-control mb-3" type="text" name="client" placeholder="Client" value="{{get_project.client}}">
+                            <textarea class="form-control mb-3 textarea" name="description" placeholder="Description*" rows="4" required>{{get_project.description}}</textarea>
+                            <div class="input-group">
+                              <div class="custom-file">
+                                <input name="image" type="file" class="custom-file-input" id="file" onchange="loadFile(event)" accept="Image/*">
+                                <label class="custom-file-label" for="file">Choose an image</label>
+                              </div>
+                          </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <b>Uploaded image</b>
+                                    <img class="mt-3" src="{{get_project.image.url}}" width="200" />
+                                </div>
+                              <div class="col-md-6">
+                                  <b>Selected image</b>
+                                  <img class="mt-3" id="output" width="200" />
+                              </div>
+                          </div>
+                          <button class="btn btn-primary" type="submit">Save</button>
+                        </form>
+  
+
+
+
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.content -->
+
+
+
+
+    </div>
+
+
+
+  
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+  
+    <!-- Main Footer -->
+    {% include "dashboard/includes/footer.html" %}
+  </div>
+{% endblock %}
+
+
+
+{% block image %}
+<script>
+    var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+{% endblock %}

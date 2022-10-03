@@ -1,0 +1,135 @@
+{% extends 'dashboard/master.html' %}
+{% load static %}
+
+{% block title %}Dashboard | Messages{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+
+    <!-- Navbar -->
+    {% include "dashboard/includes/top_navbar.html" %}
+    <!-- Main Sidebar Container -->
+    {% include "dashboard/includes/left_navbar.html" %}
+    
+  
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Messages</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashbaord</a></li>
+                <li class="breadcrumb-item active">Messages</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+  
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+             
+
+                <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Messages</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                      {% if messages %}
+                      <table class="table table-hover text-nowrap">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Full name</th>
+                            <th>Email</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for message in messages %}
+                                {% if message.status %}
+                                    <tr>
+                                        <td><a href="{% url 'readmessage' message.pk %}" class="text-dark">{{forloop.counter}}</a></td>
+                                        <td><a href="{% url 'readmessage' message.pk %}" class="text-dark">{{message.full_name}}</a></td>
+                                        <td><a href="{% url 'readmessage' message.pk %}" class="text-dark">{{message.email}}</a></td>
+                                        <td><a href="{% url 'readmessage' message.pk %}" class="text-dark">{{message.date}}</a></td>
+                                        <td>
+                                          <form method="post">{% csrf_token %}
+                                            <input type="hidden" name="message_id" value="{{message.id}}">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td class="font-weight-bold"><a href="{% url 'readmessage' message.pk %}" class="text-dark">{{forloop.counter}}</a></td>
+                                        <td class="font-weight-bold"><a href="{% url 'readmessage' message.pk %}" class="text-dark">{{message.full_name}}</a></td>
+                                        <td class="font-weight-bold"><a href="{% url 'readmessage' message.pk %}" class="text-dark">{{message.email}}</a></td>
+                                        <td class="font-weight-bold"><a href="{% url 'readmessage' message.pk %}" class="text-dark">{{message.date}}</a></td>
+                                        <td class="font-weight-bold">
+                                          <form method="post">{% csrf_token %}
+                                            <input type="hidden" name="message_id" value="{{message.id}}">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                      {% else %}
+                        <h6 class="card-title">There is no message.</h6>
+                      {% endif %}
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+
+
+              <!-- /.card -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.content -->
+
+
+
+
+    </div>
+
+
+
+  
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+  
+    <!-- Main Footer -->
+    {% include "dashboard/includes/footer.html" %}
+  </div>
+{% endblock %}
+
+
+
+{% block image %}
+<script>
+    var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'front/master.html' %}
+{% load static %}
+{% block metadata %}
+    <meta name="keywords" content="{{seo.keywords}}">
+    <meta property="og:title" content="Login" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ramzamani.com{{request.path}}" />
+    <meta property="og:image" content="https://www.ramzamani.com{{seo.image.url}}/" />
+    <meta property="og:image:alt" content="{{seo.sitename}}">
+    <meta name="description" property="og:description" content="{{seo.description}}">
+    <meta property="og:site_name" content="{{seo.sitename}}">
+{% endblock %}
+{% block titile %}Login{% endblock %}
+{% block content %}
+<style>
+    .col-md-8.mt-5.text-center p{
+        text-align: left;
+        margin-top: 10px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Navbar PC -->
+        <div class="col-2 bg-dark sticky-top d-block-m" style="height: 100vh;z-index: 3;overflow-y: auto;">
+            {% include "home/includes/navbar.html" %}
+        </div>
+
+
+        <div class="col-10 col-m">
+            <div class="row d-flex">
+                <!-- Navbar Mobile -->
+                <div class="col-md-12 p-0 sticky-top" style="z-index: 3;">
+                    <nav class="navbar navbar-light p-3 d-block-m-nav">
+                        <div class="container-fluid p-0">
+                            <div class="col-md-6">
+                                <!-- <span class="navbar-brand mb-0 h1">Navbar</span> -->
+                            </div>
+                            <div class="col-md-6 with-nav-mobile">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                                    <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel"></h5>
+                                    <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body text-white">
+                                        {% include "home/includes/navbar.html" %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+
+                <!-- About contact -->
+                <div class="col-md-12 p-5-style mt-mobile" style="background-color: #f7f7f7;">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-7">
+                                <div class="tagline mb-3 text-center" style="font-size: 32px;">Dashboard login</div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact form -->
+                <div class="col-md-12 p-5-style">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2 class="section-title margin-top-style">Login form</h2>
+                                    </div>
+                                </div>
+                                <form method="POST" class="row mt-4 mb-4">{% csrf_token %}
+                                    <div class="col-md-12">
+                                        <input type="email" name="email" class="form-control" placeholder="Email" required>
+                                    </div>
+                                    <div class="col-md-12 mt-3 input-top-m">
+                                        <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                    </div>
+                                    <div class="col-md-12 mt-4">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

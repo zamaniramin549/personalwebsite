@@ -1,0 +1,130 @@
+{% extends 'dashboard/master.html' %}
+{% load static %}
+
+{% block title %}Dashboard | Projects{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+
+    <!-- Navbar -->
+    {% include "dashboard/includes/top_navbar.html" %}
+    <!-- Main Sidebar Container -->
+    {% include "dashboard/includes/left_navbar.html" %}
+    
+  
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Projects</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashbaord</a></li>
+                <li class="breadcrumb-item active">Projects</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+  
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  {% if blogs %}
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Image</th>
+                        <th>Created date</th>
+                        <th>Last update</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for blog in blogs %}
+                      <tr data-widget="expandable-table" aria-expanded="false">
+                        <td>{{forloop.counter}}</td>
+                        <td>{{blog.title}}</td>
+                        <td>{{blog.category}}</td>
+                        {% if blog.status == True %}
+                          <td class="text-success">{{blog.status}}</td>
+                        {% else %}
+                          <td class="text-warning font-weight-bold">{{blog.status}}</td>
+                        {% endif %}
+                        <td><img src="{{blog.image.url}}" height="50" /></td>
+                        <td>{{blog.date_added}}</td>
+                        <td>{{blog.date_updated}}</td>
+                        <td>
+                          <form method="post">{% csrf_token %}
+                            <input type="hidden" name="blog_id" value="{{blog.id}}">
+                            <button class="btn btn-danger">Delete</button>
+                          </form>
+                          <a href="{% url 'editblog' blog.slug %}" class="btn btn-info">Edit</a>
+                        </td>
+                      </tr>
+                      <tr class="expandable-body">
+                        <td colspan="7">
+                          <p>
+                            {{blog.short_content}}
+                          </p>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  {% else %}
+                    <h6>There is no blog added. Click <a href="{% url 'addblog' %}">here</a> to add</h6>
+                  {% endif %}
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.content -->
+
+
+
+
+    </div>
+
+
+
+  
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+  
+    <!-- Main Footer -->
+    {% include "dashboard/includes/footer.html" %}
+  </div>
+{% endblock %}
+
+
+
+{% block image %}
+<script>
+    var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+{% endblock %}

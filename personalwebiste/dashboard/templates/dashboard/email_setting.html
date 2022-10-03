@@ -1,0 +1,96 @@
+{% extends 'dashboard/master.html' %}
+{% load static %}
+
+{% block title %}Dashboard | Email settings{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+
+    <!-- Navbar -->
+    {% include "dashboard/includes/top_navbar.html" %}
+    <!-- Main Sidebar Container -->
+    {% include "dashboard/includes/left_navbar.html" %}
+    
+  
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Email setting</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashbaord</a></li>
+                <li class="breadcrumb-item active">Email setting</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+  
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                    <small class="text-muted">Last Update: <b>{{email_setting.date_updated}}</b></small>
+
+                        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                            <input class="form-control mb-3" name="email_host" placeholder="Email host" type="text" value="{{email_setting.email_host}}">
+                            <input class="form-control mb-3" name="email_port" placeholder="Email port" type="number" value="{{email_setting.email_port}}">
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" name="email_use_tls" type="checkbox" value="{{email_setting.email_use_tls}}" id="email_use_tls" {% if email_setting.email_use_tls %} checked {% endif %}>
+                                <label class="form-check-label" for="email_use_tls">
+                                    Use TLS
+                                </label>
+                              </div>
+                            <input class="form-control mb-3" name="email_host_user" placeholder="Usename" type="email" value="{{email_setting.email_host_user}}">
+                            <input class="form-control mb-3" name="email_host_password" placeholder="Password" type="password" value="{{email_setting.email_host_password}}">
+                            <button class="btn btn-primary" type="submit mb-3">Save</button>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.content -->
+
+
+
+
+    </div>
+
+
+
+  
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+  
+    <!-- Main Footer -->
+    {% include "dashboard/includes/footer.html" %}
+  </div>
+{% endblock %}
+
+
+
+{% block image %}
+<script>
+    var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+{% endblock %}

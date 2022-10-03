@@ -1,0 +1,21 @@
+{% load static %}
+<div class="col-md-12 p-5-style mt-mobile" style="background-color: #f7f7f7;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <h1 class="section-title-name margin-top-style">{{about.full_name|title}}</h1>
+                <div class="tagline mb-3">{{about.position|title}}</div>
+                {{about.about|linebreaks}}
+                <a class="btn btn-dark mt-3 mbm" href="{% url 'allprojects' %}"><i class="fas fa-arrow-circle-right"></i> View Portfolio</a>     
+                <a class="btn btn-primary mt-3 mbm" href="{% url 'resume' %}"><i class="fas fa-file"></i> View Resume</a>     
+            </div>
+            <div class="col-md-5 margin-top-style mb-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <img src="{{about.image.url}}" class="img-fluid" alt="{{about.full_name}} home image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

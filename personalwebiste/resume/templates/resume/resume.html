@@ -1,0 +1,426 @@
+{% extends 'dashboard/master.html' %}
+{% load static %}
+
+{% block title %}Dashboard | Resume{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+
+    <!-- Navbar -->
+    {% include "dashboard/includes/top_navbar.html" %}
+    <!-- Main Sidebar Container -->
+    {% include "dashboard/includes/left_navbar.html" %}
+    
+  
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Resume</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashbaord</a></li>
+                <li class="breadcrumb-item active">Resume</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+  
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            
+
+            <div class="col-md-12 p-5-style margin-top-style">
+                <div class="card border-0 shadow p-5">
+                    <div class="card-body">
+
+
+                        <form class="row" method="post" action="{% url 'resumeheader' %}">{% csrf_token %}
+                            <div class="col-md-9 border-end">
+                                <h1 class="section-title-name margin-top-style"><input type="text" class="form-control" name="full_name" placeholder="Full name" value="{{resume_header.full_name}}" required></h1>
+                                <div class="tagline mb-3"><input type="text" class="form-control form-control-sm" name="position" placeholder="position" value="{{resume_header.position}}" required></div>
+                            </div>
+                            <div class="col-md-3 card-text">
+                                <div class="mb-2">
+                                    <input type="tel" class="form-control form-control-sm" name="phone" value="{{resume_header.phone}}" placeholder="Phone">
+                                </div>
+                                <div class="mb-2">
+                                    <input type="email" class="form-control form-control-sm" name="email" value="{{resume_header.email}}" placeholder="Email">
+                                </div>
+                                <div class="mb-2">
+                                    <input type="url" class="form-control form-control-sm" name="website" value="{{resume_header.website}}" placeholder="Website">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                <small class="text-muted"><b>last update:</b> {{resume_header.last_update}}</small>
+                            </div>
+                        </form>
+
+
+                        <hr/>
+
+
+                        <form method="post" enctype="multipart/form-data" action="{% url 'resumeabout' %}" class="row d-flex align-items-center mt-4 mb-4">{% csrf_token %}
+                            <div class="col-md-2 center">
+                                <img id="output" src="{{resume_about.image.url}}" height="130" width="130" style="border-radius: 100px;">
+                                <div class="input-group mt-3">
+                                    <div class="custom-file">
+                                      <input name="image" type="file" class="custom-file-input" id="file" onchange="loadFile(event)" accept="Image/*">
+                                      <label class="custom-file-label" for="file">image</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10 margin-top-style card-text">
+                                <textarea class="form-control" name="content" rows="5" placeholder="Tell about your self" required>{{resume_about.about}}</textarea>
+                            </div>
+                            <div class="col-md-4 mt-3">
+                                <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                <small class="text-muted"><b>last update:</b> {{resume_about.last_update}}</small>
+                            </div>
+                        </form>
+
+                        <hr/>
+
+                        <div class="row">
+
+                            
+                            <div class="col-md-9 border-end">
+                                <h5 class="section-title-resume margin-top-style">WORK EXPERIENCES</h5>
+
+
+                                <form method="post" action="{% url 'resumeworkex' %}" class="row mt-4 card-text">{% csrf_token %}
+                                    <div class="col-md-7 font-weight-bold">
+                                        <input name="title" class="form-control form-control-sm" placeholder="Job title*" required>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <small class="text-muted">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <input name="company" class="form-control form-control-sm" placeholder="Company name*" required>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input name="duration" class="form-control form-control-sm" placeholder="Duration*" required>
+                                                </div>
+                                            </div>
+                                        </small>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea class="form-control mt-1" name="content" rows="5" placeholder="About job*" required></textarea>
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                    </div>
+                                </form>
+
+                                {% for work_exper in work_exper %}
+                                    <div class="row mt-4 card-text">
+                                        <div class="col-md-8 font-weight-bold">
+                                            {{work_exper.title}}
+                                            <small>
+                                                <a href="{% url 'editworkexp' work_exper.pk %}" class="text-info"><i class="fas fa-edit"></i></a>
+                                                <form method="post" action="{% url 'delworkexp' %}" style="display: inline;">{% csrf_token %}
+                                                    <input type="hidden" value="{{work_exper.pk}}" name="work_exp_pk">
+                                                    <button class="text-danger" style="border: 0;background: none;"><i class="fas fa-trash-alt"></i></button>
+                                                </form>
+                                            </small>
+                                        </div>
+                                        <div class="col-md-4 d-flex justify-content-end">
+                                            <small class="text-muted">{{work_exper.company_name}} | {{work_exper.duration}}</small>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <small class="text-muted"><b>Last update:</b> {{work_exper.last_update}}</small>
+                                        </div>
+                                        <div class="col-md-12">
+                                            {{work_exper.content|truncatechars:150}}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+
+
+                                <h5 class="section-title-resume margin-top-style mt-5 mb-4">PROJECTS</h5>
+                                <form method="post" action="{% url 'resumeproject' %}" class="row mt-4 card-text">{% csrf_token %}
+                                    <div class="col-md-7 font-weight-bold">
+                                        <input name="project_name" class="form-control form-control-sm" placeholder="Project name*" required>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <small class="text-muted"><input type="url" class="form-control form-control-sm" name="website" placeholder="Website"></small>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea class="form-control mt-1" name="content" rows="5" placeholder="About project*" required></textarea>
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                    </div>
+                                </form>
+
+
+                                {% for project in projects %}
+                                <div class="row mt-4 card-text">
+                                    <div class="col-md-7 font-weight-bold">
+                                        {{project.project_name}}
+                                        <small>
+                                            <a href="{% url 'editproject' project.pk %}" class="text-info"><i class="fas fa-edit"></i></a>
+                                            <form method="post" action="{% url 'delproject' %}" style="display: inline;">{% csrf_token %}
+                                                <input type="hidden" value="{{project.pk}}" name="project_pk">
+                                                <button class="text-danger" style="border: 0;background: none;"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </small>
+                                    </div>
+                                    <div class="col-md-5 d-flex justify-content-end">
+                                        {% if project.website %}
+                                            <small class="text-muted"><a href="{{project.website}}" target="_blank">{{project.url_text}}</a></small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-12">
+                                        <small class="text-muted"><b>Last update:</b> {{project.last_update}}</small>
+                                    </div>
+                                    <div class="col-md-12">
+                                        {{project.content|truncatechars:150}}                                    
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+
+
+                            </div>
+
+
+                            <div class="col-md-3">
+                                <h5 class="section-title-resume margin-top-style">SKILLS</h5>
+                                <form method="post" action="{% url 'resumetechnicalskill' %}" class="row mt-4 card-text">{% csrf_token %}
+                                    <div class="col-md-12 font-weight-bold">
+                                        Technical
+                                    </div>
+                                    <div class="col-md-12">
+                                       <textarea class="form-control" name="technical_skill" placeholder="Technical skill" rows="10">{{resume_technical_skills.skills}}</textarea>
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                        <small class="text-muted"><b>last update:</b> {{resume_technical_skills.last_update}}</small>
+                                    </div>
+                                </form>
+
+
+                                <form method="post" action="{% url 'resumeprofessionalskill' %}" class="row mt-4 card-text">{% csrf_token %}
+                                    <div class="col-md-12 font-weight-bold">
+                                        Professional
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" name="professional_skill" placeholder="Professional skill" rows="10">{{resume_professional_skills.skills}}</textarea>
+                                     </div>
+                                     <div class="col-md-12 mt-3">
+                                         <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                         <small class="text-muted"><b>last update:</b> {{resume_professional_skills.last_update}}</small>
+                                     </div>
+                                </form>
+
+
+                                <h5 class="section-title-resume margin-top-style mt-5">EDUCATION</h5>
+
+                                <form method="post" action="{% url 'resumeaddeducation' %}" class="row mt-4 card-text">{% csrf_token %}
+                                    <div class="col-md-12 mb-2">
+                                        <input type="text" class="form-control form-control-sm" name="subject" placeholder="Subject" required>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <input type="text" class="form-control form-control-sm" name="university" placeholder="University or college" required>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <small class="">
+                                            <input type="text" class="form-control form-control-sm" name="year" placeholder="Year: 2015 - 2019" required>
+                                        </small>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                    </div>
+                                </form>
+
+                                {% for resume_education in resume_education %}
+                                    <div class="row mt-4 card-text">
+                                        <div class="col-md-12">
+                                            {{resume_education.subject}}
+                                            <small>
+                                                <a href="{% url 'resumeediteducation' resume_education.pk %}" class="text-info"><i class="fas fa-edit"></i></a>
+                                                <form method="post" action="{% url 'deleteeducation' %}" style="display: inline;">{% csrf_token %}
+                                                    <input type="hidden" value="{{resume_education.pk}}" name="education_pk">
+                                                    <button class="text-danger" style="border: 0;background: none;"><i class="fas fa-trash-alt"></i></button>
+                                                </form>
+                                            </small>
+                                        </div>
+                                        <div class="col-md-12 text-muted">
+                                            {{resume_education.university}}
+                                        </div>
+                                        <div class="col-md-12">
+                                            <small class="text-muted">
+                                                {{resume_education.year}}
+                                            </small>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+                                <h5 class="section-title-resume margin-top-style mt-5">AWARDS</h5>
+                                <form method="post" action="{% url 'resumeaddaward' %}" class="row mt-4 card-text">{% csrf_token %}
+                                    <div class="col-md-12 mb-2">
+                                        <input type="text" class="form-control form-control-sm" name="award" placeholder="Award" required>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <input type="text" class="form-control form-control-sm" name="award-title" placeholder="Award title" required>
+                                    </div>
+                                    <div class="col-md-12 mb-2">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                    </div>
+                                </form>
+
+                                {% for resume_award in resume_awards %}
+                                    <div class="row mt-4 card-text">
+                                        <div class="col-md-12">
+                                            {{resume_award.award}}
+                                            <small>
+                                                <a href="{% url 'resumeeditaward' resume_award.pk %}" class="text-info"><i class="fas fa-edit"></i></a>
+                                                <form method="post" action="{% url 'deleteaward' %}" style="display: inline;">{% csrf_token %}
+                                                    <input type="hidden" value="{{resume_award.pk}}" name="award_pk">
+                                                    <button class="text-danger" style="border: 0;background: none;"><i class="fas fa-trash-alt"></i></button>
+                                                </form>
+                                            </small>
+                                        </div>
+                                        <div class="col-md-12 text-muted">
+                                            {{resume_award.award_title}}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+
+                                <h5 class="section-title-resume margin-top-style mt-5 mb-4">LANGUAGES</h5>
+                                <form method="post" action="{% url 'resumelanguage' %}" class="row mt-2 card-text">{% csrf_token %}
+                                    <div class="col-md-12">
+                                        <div class="col-md-12 mb-2">
+                                            <input type="text" class="form-control form-control-sm" name="language" placeholder="Language" required>
+                                        </div>
+                                        <div class="col-md-12 mb-2">
+                                            <select name="level" class="custom-select custom-select-sm">
+                                                <option value="Fluent">Fluent</option>
+                                                <option value="Native">Native</option>
+                                                <option value="Basic">Basic</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12 mb-2">
+                                            <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                {% for resume_lang in resume_langs %}
+                                    <div class="row mt-2 card-text">
+                                        <div class="col-md-12">
+                                            {{resume_lang.language}}
+                                            <small class="text-muted">
+                                                ({{resume_lang.language_level}})
+                                            </small>
+                                            <small>
+                                                <a href="{% url 'resumeeditlang' resume_lang.pk %}" class="text-info"><i class="fas fa-edit"></i></a>
+                                                <form method="post" action="{% url 'deletelang' %}" style="display: inline;">{% csrf_token %}
+                                                    <input type="hidden" value="{{resume_lang.pk}}" name="lang_pk">
+                                                    <button class="text-danger" style="border: 0;background: none;"><i class="fas fa-trash-alt"></i></button>
+                                                </form>
+                                            </small>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+
+                                <h5 class="section-title-resume margin-top-style mt-5 mb-4">INTERESTS</h5>
+                                <form method="post" action="{% url 'updateresumeinterest' %}" class="row mt-2 card-text">{% csrf_token %}
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" name="interests" placeholder="Interests (seprate them with ' , ')" rows="10">{{resume_interest.interests}}</textarea>
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                        <small class="text-muted"><b>last update:</b> {{resume_interest.last_update}}</small>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- <hr/> -->
+
+                        <!-- <div class="row mt-5 d-none d-sm-block card-text">
+                            <div class="col-md-12 d-flex align-items-center justify-content-center">
+                                <span style="display: inline-block; margin-right: 20px;">
+                                    <i class="fab fa-linkedin fa-lg"></i>
+                                    <a href="#" class="text-muted" style="margin-left: 6px;"> www.linkedin.com</a>
+                                </span> 
+                                
+                                <span style="display: inline-block; margin-right: 20px;">
+                                    <i class="fab fa-twitter-square fa-lg"></i>
+                                    <a href="#" class="text-muted" style="margin-left: 6px;"> www.twitter.com</a>
+                                </span>
+
+                                <span style="display: inline-block; margin-right: 20px;">
+                                    <i class="fab fa-facebook-square fa-lg"></i>
+                                    <a href="#" class="text-muted" style="margin-left: 6px;"> www.facebook.com</a>
+                                </span>
+
+                                <span style="display: inline-block; margin-right: 20px;">
+                                    <i class="fab fa-instagram fa-lg"></i>
+                                    <a href="#" class="text-muted" style="margin-left: 6px;"> www.instagram.com</a>
+                                </span>
+                            </div>
+                        </div> -->
+
+
+                    </div>
+                </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      <!-- /.content -->
+
+
+
+
+    </div>
+
+
+
+  
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+  
+    <!-- Main Footer -->
+    {% include "dashboard/includes/footer.html" %}
+  </div>
+{% endblock %}
+
+
+
+{% block image %}
+<script>
+    var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+{% endblock %}

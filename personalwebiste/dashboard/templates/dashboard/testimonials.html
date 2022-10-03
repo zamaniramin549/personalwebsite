@@ -1,0 +1,131 @@
+{% extends 'dashboard/master.html' %}
+{% load static %}
+
+{% block title %}Dashboard | Testimonials{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+
+    <!-- Navbar -->
+    {% include "dashboard/includes/top_navbar.html" %}
+    <!-- Main Sidebar Container -->
+    {% include "dashboard/includes/left_navbar.html" %}
+    
+  
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Testimonials</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashbaord</a></li>
+                <li class="breadcrumb-item active">Testimonials</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+  
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  {% if testimonials %}
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>status</th>
+                        <th>Image</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for testimonial in testimonials %}
+                      <tr data-widget="expandable-table" aria-expanded="false">
+                        <td>{{forloop.counter}}</td>
+                        <td>{{testimonial.full_name}}</td>
+                        {% if testimonial.status == True %}
+                            <td><a href="{% url 'statuschange' testimonial.pk %}" class="text-success">{{testimonial.status}}</a></td>
+                        {% else %}
+                            <td><a href="{% url 'statuschange' testimonial.pk %}" class="text-warning font-weight-bold">{{testimonial.status}}</a></td>
+                        {% endif %}
+                        <td>
+                            {% if testimonial.image %}
+                                <img src="{{testimonial.image.url}}" height="50" />
+                            {% else %}
+                                <img src="{% static 'front/images/favicon.png' %}" height="50" />
+                            {% endif %}
+                        </td>
+                        <td>{{testimonial.date}}</td>
+                        <td>
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="testimonial_id" value="{{testimonial.id}}">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                      </tr>
+                      <tr class="expandable-body">
+                        <td colspan="6">
+                          <p>
+                            {{testimonial.content}}
+                          </p>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  {% else %}
+                    <h6>There is no testimonials.</h6>
+                  {% endif %}
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.content -->
+
+
+
+
+    </div>
+
+
+
+  
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+  
+    <!-- Main Footer -->
+    {% include "dashboard/includes/footer.html" %}
+  </div>
+{% endblock %}
+
+
+
+{% block image %}
+<script>
+    var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+{% endblock %}

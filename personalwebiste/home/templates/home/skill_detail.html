@@ -1,0 +1,85 @@
+{% extends 'front/master.html' %}
+{% load static %}
+{% block metadata %}
+    <meta name="keywords" content="{{seo.keywords}}">
+    <meta property="og:title" content="Skill - {{skill.skill}}" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ramzamani.com{{request.path}}" />
+    <meta property="og:image" content="https://www.ramzamani.com{{skill.image.url}}/" />
+    <meta property="og:image:alt" content="{{seo.sitename}}">
+    <meta name="description" property="og:description" content="{{skill.description}}">
+    <meta property="og:site_name" content="{{seo.sitename}}">
+{% endblock %}
+{% block titile %}Skill - {{skill.skill}}{% endblock %}
+{% block content %}
+<style>
+    .col-md-8.mt-5.text-center p{
+        text-align: left;
+        margin-top: 10px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Navbar PC -->
+        <div class="col-2 bg-dark sticky-top d-block-m" style="height: 100vh;z-index: 3;overflow-y: auto;">
+            {% include "home/includes/navbar.html" %}
+        </div>
+
+
+        <div class="col-10 col-m">
+            <div class="row d-flex">
+                <!-- Navbar Mobile -->
+                <div class="col-md-12 p-0 sticky-top" style="z-index: 3;">
+                    <nav class="navbar navbar-light p-3 d-block-m-nav">
+                        <div class="container-fluid p-0">
+                            <div class="col-md-6">
+                                <!-- <span class="navbar-brand mb-0 h1">Navbar</span> -->
+                            </div>
+                            <div class="col-md-6 with-nav-mobile">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                                    <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel"></h5>
+                                    <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body text-white">
+                                        {% include "home/includes/navbar.html" %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8 mt-5">
+                        <div class="card mb-3 border-0">
+                            <div class="row g-0">
+                              <div class="col-md-4">
+                                <img src="{{skill.image.url}}" class="img-fluid rounded-start" alt="{{skill.name}} image">
+                              </div>
+                              <div class="col-md-8 d-flex align-items-center">
+                                <div class="card-body text-center">
+                                  <h1>{{skill.skill}}</h1>
+                                  <div class="progress">
+                                    <div class="progress-bar bg-dark" role="progressbar" style="width: {{skill.level}}%;" aria-valuenow="{{skill.level}}" aria-valuemin="0" aria-valuemax="100">{{skill.level}}%</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        {{skill.description|safe|linebreaks}}
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends 'front/master.html' %}
+{% load static %}
+{% block metadata %}
+    <meta name="keywords" content="{{seo.keywords}}">
+    <meta property="og:title" content="Testimonials" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ramzamani.com{{request.path}}" />
+    <meta property="og:image" content="https://www.ramzamani.com{{seo.image.url}}/" />
+    <meta property="og:image:alt" content="{{seo.sitename}}">
+    <meta name="description" property="og:description" content="{{seo.description}}">
+    <meta property="og:site_name" content="{{seo.sitename}}">
+{% endblock %}
+{% block titile %}Testimonials{% endblock %}
+{% block content %}
+<style>
+    .col-md-8.mt-5.text-center p{
+        text-align: left;
+        margin-top: 10px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Navbar PC -->
+        <div class="col-2 bg-dark sticky-top d-block-m" style="height: 100vh;z-index: 3;overflow-y: auto;">
+            {% include "home/includes/navbar.html" %}
+        </div>
+
+
+        <div class="col-10 col-m">
+            <div class="row d-flex">
+                <!-- Navbar Mobile -->
+                <div class="col-md-12 p-0 sticky-top" style="z-index: 3;">
+                    <nav class="navbar navbar-light p-3 d-block-m-nav">
+                        <div class="container-fluid p-0">
+                            <div class="col-md-6">
+                                <!-- <span class="navbar-brand mb-0 h1">Navbar</span> -->
+                            </div>
+                            <div class="col-md-6 with-nav-mobile">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                                    <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel"></h5>
+                                    <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body text-white">
+                                        {% include "home/includes/navbar.html" %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+
+                <!-- About contact -->
+                <div class="col-md-12 p-5-style mt-mobile" style="background-color: #f7f7f7;">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-7">
+                                <div class="tagline mb-3 text-center" style="font-size: 32px;">Testimonials</div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact form -->
+                <div class="col-md-12 p-5-style">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2 class="section-title margin-top-style">Please fill up the form</h2>
+                                    </div>
+                                </div>
+
+                                {% if msgs %}
+                                <div class="alert alert-success alert-dismissible fade show mb-3 mt-3" role="alert">
+                                    {{msgs}}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                {% endif %}
+
+                                {% if msg %}
+                                <div class="alert alert-warning alert-dismissible fade show mb-3 mt-3" role="alert">
+                                    {{msg}}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                {% endif %}
+
+
+                                <form method="POST" enctype="multipart/form-data" class="row mt-4 mb-4">{% csrf_token %}
+                                    <div class="col-md-12">
+                                        <input type="text" name="fullname" class="form-control" placeholder="Full name or Company name*" required>
+                                    </div>
+                                    <div class="col-md-12 mt-3 input-top-m">
+                                        <textarea name="content" class="form-control" maxlength="300" id="limit" placeholder="Content*" rows="6" onkeyup="textCounter(this,'counter',300);" required></textarea>
+                                        <small class="text-muted">Max length:<input disabled  maxlength="300" size="3" value="300" id="counter" style="background: none; border: none;"></small>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="formFile" class="form-label">Image <small class="text-muted">(optional)</small>:</label>
+                                        <input class="form-control" name="image" type="file" id="formFile" accept="Image/*">
+                                      </div>
+                                    <div class="col-md-12 mt-4">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-circle-right"></i> Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<script>
+    function maxLength(el) {    
+    if (!('maxLength' in el)) {
+        var max = el.attributes.maxLength.value;
+        el.onkeypress = function () {
+            if (this.value.length >= max) return false;
+        };
+    }
+}
+
+maxLength(document.getElementById("limit"));
+
+function textCounter(field,field2,maxlimit)
+{
+ var countfield = document.getElementById(field2);
+ if ( field.value.length > maxlimit ) {
+  field.value = field.value.substring( 0, maxlimit );
+  return false;
+ } else {
+  countfield.value = maxlimit - field.value.length;
+ }
+}
+</script>
+{% endblock %}

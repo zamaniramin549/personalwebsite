@@ -1,0 +1,94 @@
+{% extends 'front/master.html' %}
+{% load static %}
+{% block metadata %}
+    <meta name="keywords" content="{{seo.keywords}}">
+    <meta property="og:title" content="Home" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ramzamani.com{{request.path}}" />
+    <meta property="og:image" content="https://www.ramzamani.com{{seo.image.url}}/" />
+    <meta property="og:image:alt" content="{{seo.sitename}}">
+    <meta name="description" property="og:description" content="{{seo.description}}">
+    <meta property="og:site_name" content="{{seo.sitename}}">
+{% endblock %}
+{% block titile %}Home{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Navbar PC -->
+        <div class="col-2 bg-dark sticky-top d-block-m" style="height: 100vh;z-index: 3;overflow-y: auto;">
+            {% include "home/includes/navbar.html" %}
+        </div>
+
+
+        <div class="col-10 col-m">
+            <div class="row d-flex">
+                <!-- Navbar Mobile -->
+                <div class="col-md-12 p-0 sticky-top" style="z-index: 3;">
+                    <nav class="navbar navbar-light p-3 d-block-m-nav">
+                        <div class="container-fluid p-0">
+                            <div class="col-md-6">
+                                <!-- <span class="navbar-brand mb-0 h1">Navbar</span> -->
+                            </div>
+                            <div class="col-md-6 with-nav-mobile">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                                    <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel"></h5>
+                                    <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body text-white">
+                                        {% include "home/includes/navbar.html" %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                    
+                <!-- About -->
+                {% include "home/includes/about_section.html" %}
+
+                <!-- What I do -->
+                {% if skills %}
+                    {% include "home/includes/whatido_section.html" %}
+                    <hr/>
+                {% endif %}
+
+                
+                <!-- Latest Projects -->
+                {% if projects %}
+                    {% include "home/includes/latest_project_section.html" %}
+                    <hr/>
+                {% endif %}
+               
+
+
+                <!-- Latest Tutorials -->
+                    <!-- {% include "home/includes/latest_tutorials_section.html" %} -->
+                    <!-- <hr/> -->
+
+
+
+                <!-- Latest blog post -->
+                {% if blogs %}
+                    {% include "home/includes/latest_blog_post_section.html" %}
+                    <hr/>
+                {% endif %}
+
+
+                <!-- testimonials -->
+                {% if testimonials %}
+                    {% include "home/includes/testimonials_section.html" %}
+                {% endif %}
+                
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

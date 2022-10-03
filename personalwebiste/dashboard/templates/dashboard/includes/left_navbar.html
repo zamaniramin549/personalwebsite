@@ -1,0 +1,252 @@
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'dashboard' %}" class="brand-link">
+      <img src="{% static 'front/images/favicon.png' %}" alt="logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Dashboard</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{navbat_setting.image.url}}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="{% url 'dashboard' %}" class="d-block">Ramin Zamani</a>
+        </div>
+      </div>
+
+      <!-- SidebarSearch Form -->
+      <!-- <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div> -->
+
+
+
+
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            
+ 
+          <li class="nav-item has-treeview">
+                <a href="{% url 'dashboard' %}" class="nav-link {% if request.path == '/dashboard/' %}active {% endif %}">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Dashbaord
+                  </p>
+                </a>
+            </li>
+
+
+              <li class="nav-item has-treeview">
+                <a href="{% url 'about' %}" class="nav-link {% if request.path == '/dashboard/about/' %}active {% endif %}">
+                  <i class="nav-icon fas fa-address-card"></i>
+                  <p>
+                    About
+                  </p>
+                </a>
+              </li>
+
+
+              <li class="nav-item">
+                <a href="{% url 'messagesdashboard' %}" class="nav-link {% if request.path == '/dashboard/messages/' %}active {% endif %}">
+                  <i class="nav-icon  fas fa-envelope"></i>
+                  <p>
+                    Messages
+                    {% if countmsgs > 0 %}
+                    <span class="right badge badge-danger">{{countmsgs}} New</span>
+                    {% endif %}
+                  </p>
+                </a>
+            </li>
+
+
+            <li class="nav-item">
+              <a href="{% url 'resumedashboard' %}" class="nav-link {% if request.path == '/resume/resume/' %}active {% endif %}">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                  Resume
+                </p>
+              </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'testimonialsdashboard' %}" class="nav-link {% if request.path == '/dashboard/dashboard-testimonials/' %}active {% endif %}">
+              <i class="nav-icon fas fa-comment-alt"></i>
+              <p>
+                Testimonials
+              </p>
+            </a>
+        </li>
+          
+          <!-- What I do -->
+            <li class="nav-item has-treeview {% if request.path == '/dashboard/what-i-do/' or request.path == '/dashboard/add-what-i-do/' or request.path == '/dashboard/what-i-do-settings/' %}menu-open {% endif %}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-archive"></i>
+              <p>
+                Skills
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'whatido' %}" class="nav-link {% if request.path == '/dashboard/what-i-do/' %}active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'addwhatido' %}" class="nav-link {% if request.path == '/dashboard/add-what-i-do/' %}active {% endif %}" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'whatidosettings' %}" class="nav-link {% if request.path == '/dashboard/what-i-do-settings/' %}active {% endif %}" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Settings</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+          <!-- Project -->
+          <li class="nav-item has-treeview {% if request.path == '/dashboard/view-project/' or request.path == '/dashboard/add-project/' or request.path == '/dashboard/project-setting/' %}menu-open {% endif %}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-project-diagram"></i>
+              <p>
+                Project
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'viewproject' %}" class="nav-link {% if request.path == '/dashboard/view-project/' %}active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'addproject' %}" class="nav-link {% if request.path == '/dashboard/add-project/' %}active {% endif %}" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'projectsetting' %}" class="nav-link {% if request.path == '/dashboard/project-setting/' %}active {% endif %}" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Settings</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+
+          <!-- blog -->
+          <li class="nav-item has-treeview {% if request.path == '/dashboard/categories/' or request.path == '/dashboard/add-blog/' or request.path == '/dashboard/view-blog/' %}menu-open {% endif %}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-blog"></i>
+              <p>
+                Blog
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'viewblog' %}" class="nav-link {% if request.path == '/dashboard/view-blog/' %}active {% endif %}" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'addblog' %}" class="nav-link {% if request.path == '/dashboard/add-blog/' %}active {% endif %}" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'categories' %}" class="nav-link {% if request.path == '/dashboard/categories/' %}active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Categories</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+          <!-- settings -->
+          <li class="nav-item has-treeview {% if request.path == '/dashboard/navbar-settings/' or request.path == '/dashboard/seo-setting/' or request.path == '/dashboard/dashboard-email/' %}menu-open {% endif %}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>
+                Settings
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'navbardashboard' %}" class="nav-link {% if request.path == '/dashboard/navbar-settings/' %}active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Navbar settings
+                  </p>
+                </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'seosetting' %}" class="nav-link {% if request.path == '/dashboard/seo-setting/' %}active {% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>
+                  SEO settings
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'dashboardemail' %}" class="nav-link {% if request.path == '/dashboard/dashboard-email/' %}active {% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>
+                  Email setting
+                </p>
+              </a>
+            </li>
+            </ul>
+          </li>
+
+
+          <li class="nav-item">
+            <a href="{% url 'visitorsdashboard' %}" class="nav-link {% if request.path == '/dashboard/dashboard-visitors/' %}active {% endif %}">
+              <i class="nav-icon fas fa-eye"></i>
+              <p>
+                Visitors
+              </p>
+            </a>
+        </li>
+
+         
+
+        <li class="nav-item">
+          <a href="{% url 'dashboardlogout' %}" class="nav-link">
+            <i class="nav-icon fas fa-sign-out-alt"></i>
+            <p>
+              Logout
+            </p>
+          </a>
+        </li>
+
+
+        </ul>
+      </nav>
+    </div>
+  </aside>

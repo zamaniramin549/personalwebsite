@@ -1,0 +1,152 @@
+{% extends 'dashboard/master.html' %}
+{% load static %}
+
+{% block title %}Dashboard | Visitors | {{visitor.ip}}{% endblock %}
+
+{% block content %}
+<style type="text/css">
+    /* Set the size of the div element that contains the map */
+    #map {
+      height: 100%;
+      /* The height is 250 pixels */
+      width: 100%;
+      /* The width is the width of the web page */
+    }
+  </style>
+<div class="wrapper">
+
+    <!-- Navbar -->
+    {% include "dashboard/includes/top_navbar.html" %}
+    <!-- Main Sidebar Container -->
+    {% include "dashboard/includes/left_navbar.html" %}
+    
+  
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Visitors / {{visitor.ip}}</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashbaord</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'visitorsdashboard' %}">Visitors</a></li>
+                <li class="breadcrumb-item active">{{visitor.ip}}</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+  
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+             
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                          <!-- <div class="col-md-12">
+                            <h2 class="card-title">Username: {{visitor.user_name}}</h2>
+                          </div>
+                          <div class="col-md-12">
+                            <h2 class="card-title">Host name: {{visitor.host_name}}</h2>
+                          </div> -->
+                            <div class="col-md-6">
+                                <h3 class="card-title">{{visitor.city}}, {{visitor.state}}, {{visitor.postalcode}}, {{visitor.country}}</h3><br/>
+                                <small class="text-muted">First visit: {{visitor.date}}</small><br/>
+                                <small class="text-muted">Last visit: {{visitor.date_update}}</small>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="card-title">
+                                  IP: {{visitor.ip}} <br/> 
+                                  Traits network: {{visitor.traits_network}} <br/>
+                                  Operating system: {{visitor.operating_system}}<br/>
+                                  Device: {{visitor.device}}<br/>
+                                  Device family: {{visitor.device_family}}<br/>
+                                  Browser: {{visitor.browser}}<br/>
+                                </h3>
+                            </div>
+                        </div>
+                      
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <div class="row">
+                            <div class="col-md-6" style="height: 60vh; overflow-y: auto;">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <th>Url</th>
+                                        <th>Date and time</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for info in info %}
+                                            <tr>
+                                                <td class="text-dark">{{forloop.counter}}</td>
+                                                <td class="text-dark">{{info.url}}</td>
+                                                <td class="text-dark">{{info.date}}</td>
+                                            </tr>
+                                      {% endfor %}
+                                    </tbody>
+                                  </table>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="map"></div>
+                                <script>
+                                    function initMap() {
+                                      var location = { lat: {{visitor.latitude}}, lng: {{visitor.longitude}}  };
+                                      var map = new google.maps.Map(document.getElementById("map"), {
+                                        zoom: 12,
+                                        center: location,
+                                      });
+                                      var marker = new google.maps.Marker({
+                                        position: location,
+                                        map: map,
+                                      });
+                                    }
+                                  </script>
+                                  <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhJ7hQD3QsoPXRF3hUZ7IAgMWnpasq8I0&amp;callback=initMap">
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+
+
+              <!-- /.card -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.content -->
+
+
+
+
+    </div>
+
+
+
+  
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+  
+    <!-- Main Footer -->
+    {% include "dashboard/includes/footer.html" %}
+  </div>
+{% endblock %}
+

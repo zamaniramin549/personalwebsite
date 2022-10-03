@@ -1,0 +1,176 @@
+{% extends 'front/master.html' %}
+{% load static %}
+{% load humanize %}
+{% block metadata %}
+    <meta name="keywords" content="{{seo.keywords}}">
+    <meta property="og:title" content="Blog - {{get_blog.title}}" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ramzamani.com{{request.path}}" />
+    <meta property="og:image" content="https://www.ramzamani.com{{get_blog.image.url}}/" />
+    <meta property="og:image:alt" content="{{seo.sitename}}">
+    <meta name="description" property="og:description" content="{{get_blog.short_content}}">
+    <meta property="og:site_name" content="{{seo.sitename}}">
+{% endblock %}
+{% block titile %}Blog - {{get_blog.title}}{% endblock %}
+{% block content %}
+<style>
+    pre{
+        background-color: #FAFAFA;
+        padding: 20px;
+    }
+    .col-md-12.mt-3 label{
+        display: none !important;
+    }
+    {% if msgw %}
+    .col-md-12.mt-3 iframe{
+        border: 1px solid red;
+    }
+    {% endif %}
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Navbar PC -->
+        <div class="col-2 bg-dark sticky-top d-block-m" style="height: 100vh;z-index: 3;overflow-y: auto;">
+            {% include "home/includes/navbar.html" %}
+        </div>
+
+
+        <div class="col-10 col-m">
+            <div class="row d-flex">
+                <!-- Navbar Mobile -->
+                <div class="col-md-12 p-0 sticky-top" style="z-index: 3;">
+                    <nav class="navbar navbar-light p-3 d-block-m-nav">
+                        <div class="container-fluid p-0">
+                            <div class="col-md-6">
+                                <!-- <span class="navbar-brand mb-0 h1">Navbar</span> -->
+                            </div>
+                            <div class="col-md-6 with-nav-mobile">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                                    <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel"></h5>
+                                    <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body text-white">
+                                        {% include "home/includes/navbar.html" %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                
+                 <div class="col-md-12 p-5-style mt-mobile">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-9">
+                                <div class="row">
+                                    {% if msgs %}
+                                        <div class="col-md-12">
+                                            <div class="alert alert-success" role="alert">
+                                                You're comment was successful.
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% if msgw %}
+                                        <div class="col-md-12">
+                                            <div class="alert alert-warning" role="alert">
+                                                You're comment <b>was not successful</b>.
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <div class="col-md-12">
+                                        <h2 class="margin-top-style">{{get_blog.title}}</h2>
+                                    </div>
+                                    <div class="col-md-12 mb-3" style="font-size: 12px;">
+                                        <span class="text-muted">Published {{get_blog.date_added|naturaltime}} </span>
+                                        <!-- <span class="text-muted">5 min read - </span> -->
+                                        <span class="text-muted"> - {{get_blog_comment_count}} comments</span>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <img src="{{get_blog.image.url}}" class="card-img-top rounded-0 h-80" alt=" image">
+                                    </div>
+
+                                    <div class="col-md-12 fs-6 mb-4" style="line-height: 1.6;">
+                                        {{get_blog.short_content}}
+                                    </div>
+
+
+                                    <div class="col-md-12 fs-6 mb-3" style="line-height: 1.6;">
+                                        {{get_blog.content|safe}}
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="col-md-12">
+                                        <!-- Write comment -->
+                                        <form method="post" action="{% url 'blogdetail' get_blog.slug %}" class="row mb-3">{% csrf_token %}
+                                            <div class="col-12 mb-3">
+                                                <h6 class="section-title margin-top-style">Write a comment</h6>
+                                            </div>
+                                            <div class="col-6">
+                                                <input class="form-control" type="text" name="full_name" {% if full_name %} value="{{full_name}}" {% else %} value="{{session_full_name}}" {% endif %} placeholder="Full name*" required>
+                                            </div>
+                                            <div class="col-6">
+                                                <input class="form-control" type="email" name="email" {% if email %} value="{{email}}" {% else %} value="{{session_email}}" {% endif %} placeholder="Email*" required>
+                                                <small class="text-muted">Your email won't be shown publicly.</small>
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <textarea class="form-control" rows="4" name="content" placeholder="Your comment*" required>{{content}}</textarea>
+                                                <input type="hidden" name="slug" value="{{get_blog.slug}}">
+                                            </div>
+                                            {% if msgw %}
+                                                <div class="col-md-12 mt-3">
+                                                    {{recaptcha}}                                  
+                                                </div>
+                                            {% else %}
+                                                <div class="col-md-12 mt-3">
+                                                    {{recaptcha}}                                  
+                                                </div>
+                                            {% endif %}
+                                            <div class="col-md-3 mt-3">
+                                                <button class="btn btn-primary"><i class="fa fa-comment-lines fa-lg me-1"></i> Comment</button>
+                                            </div>
+                                        </form>
+
+                                        {% if get_blog_comment %}
+                                            <!-- Read comments -->
+                                            <hr/>
+                                            <div class="col-12 mb-3">
+                                                <h6 class="section-title margin-top-style">Comments</h6>
+                                            </div>
+
+                                            {% for get_blog_comment in get_blog_comment %}
+                                            <div class="col-12 mb-3">
+                                                <h6 class="margin-top-style fw-bold">{{get_blog_comment.full_name}} <small class="text-muted" style="font-size: 12px;">{{get_blog_comment.date|naturalday}}</small></h6>
+                                                {{get_blog_comment.comment|linebreaks}}
+                                            </div>
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        
+                                    </div>
+
+
+                                  
+
+
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+

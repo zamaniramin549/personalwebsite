@@ -1,0 +1,114 @@
+{% extends 'front/master.html' %}
+{% load static %}
+{% block metadata %}
+    <meta name="keywords" content="{{seo.keywords}}">
+    <meta property="og:title" content="All blogs" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ramzamani.com{{request.path}}" />
+    <meta property="og:image" content="https://www.ramzamani.com{{seo.image.url}}/" />
+    <meta property="og:image:alt" content="{{seo.sitename}}">
+    <meta name="description" property="og:description" content="{{seo.description}}">
+    <meta property="og:site_name" content="{{seo.sitename}}">
+{% endblock %}
+{% block infinit_scroll %}
+<script type="text/javascript" src="{% static 'front/js/JQuery.js' %}"></script>
+<script src="{% static 'front/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'front/js/infinite.min.js' %}"></script>
+{% endblock %}
+{% block titile %}All blogs{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Navbar PC -->
+        <div class="col-2 bg-dark sticky-top d-block-m" style="height: 100vh;z-index: 3;overflow-y: auto;">
+            {% include "home/includes/navbar.html" %}
+        </div>
+
+
+        <div class="col-10 col-m">
+            <div class="row d-flex">
+                <!-- Navbar Mobile -->
+                <div class="col-md-12 p-0 sticky-top" style="z-index: 3;">
+                    <nav class="navbar navbar-light p-3 d-block-m-nav">
+                        <div class="container-fluid p-0">
+                            <div class="col-md-6">
+                                <!-- <span class="navbar-brand mb-0 h1">Navbar</span> -->
+                            </div>
+                            <div class="col-md-6 with-nav-mobile">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                                    <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel"></h5>
+                                    <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body text-white">
+                                        {% include "home/includes/navbar.html" %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                 <!-- Search -->
+                 <div class="col-md-12 p-5-style mt-mobile" style="background-color: #f7f7f7;">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-7">
+                                <div class="tagline mb-3 text-center">Blogs</div>
+                                <form class="d-flex">
+                                    <input class="form-control me-2" type="text" placeholder="Search Blogs By Title" aria-label="Search" id="myInput" onkeyup="myFunction()" autocomplete="off">
+                                    <!-- <button class="btn btn-dark" type="submit">Search</button> -->
+                                </form>
+                                <div class="text-center mt-4 d-flex justify-content-center">
+                                    <span style="height: 1px; width: 300px;display: block;background-color: #6c757d;"></span>
+                                </div> 
+                                <ul class="nav justify-content-center mt-4 mb-2">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-muted">Categories:</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-muted {% if request.path == '/all-blogs/' %} active-blog {% endif %}" href="{% url 'allblogs' %}">All</a>
+                                    </li>
+                                    {% for category in categories %}
+                                        <li class="nav-item">
+                                            <a class="nav-link text-muted {% if category.slug == get_category.slug %} active-blog {% endif %}" href="{{category.get_absolute_url}}">{{category.category_name}}</a>
+                                        </li>
+                                    {% endfor %}
+                                  </ul>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% include "home/includes/latest_blog_post_section.html" %}
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block search_javascript %}
+<script>
+    function myFunction() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByClassName("col-md-4 mb-4");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("h5")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>
+{% endblock %}

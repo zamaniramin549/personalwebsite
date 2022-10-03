@@ -1,0 +1,28 @@
+{% load static %}
+<div class="col-md-12 p-5-style">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="section-title margin-top-style">What I do</h2>
+                <p class="mt-3">
+                  {{whatido_setting.description}}
+                </p>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+          {% for skill in skills %}
+            <div class="col-md-3 mb-3">
+                <div class="card border-0">
+                    <img src="{{skill.image.url}}" height="30" width="30">
+                    <div class="card-body p-0 mt-2">
+                      <a href="{{skill.get_absolute_url}}" class="text-dark"><h5 class="card-title">{{skill.skill}} <small class="text-muted" style="font-size: 10px;">%{{skill.level}}</small></h5></a>
+                      <p class="card-text">
+                        {{skill.description|truncatechars:150}}
+                      </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

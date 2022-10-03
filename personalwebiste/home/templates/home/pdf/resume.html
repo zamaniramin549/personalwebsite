@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{{seo.keywords}}">
+<meta property="og:title" content="Ramin - Resume" />
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.ramzamani.com{{request.path}}" />
+<meta property="og:image" content="https://www.ramzamani.com{{seo.image.url}}/" />
+<meta property="og:image:alt" content="{{seo.sitename}}">
+<meta name="description" property="og:description" content="{{seo.description}}">
+<meta property="og:site_name" content="{{seo.sitename}}">
+<title>Ramin - Resume</title>
+</head>
+
+<body>
+
+
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td width="70%" style="border-right:1px solid #dee2e6 ;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:28px; color:#173b6c;">
+                            {{resume_header.full_name}}
+                            <img style="width: 45px; height: 45px; border-radius: 100px;" src = "https://{{site_name}}{{qr_code.qr_code.url}}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:15px;">{{resume_header.position}}</td>
+                    </tr>
+                
+                    <!-- <tr>
+                        <td>&nbsp;</td>
+                    </tr> -->
+            </table>
+            </td>
+            <td width="30%" style="margin-left:20px ;" valign="top">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                {% if resume_header.phone %}
+                <tr>
+                    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px; color: #5469C9;" align="left">{{resume_header.phone}}</td>
+                </tr>
+                {% endif %}
+                {% if resume_header.email %}
+                <tr>
+                    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px; color: #5469C9;"  align="left">{{resume_header.email}}</td>
+                </tr>
+                {% endif %}
+
+                {% if resume_header.website %}
+                <tr>
+                    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px; color: #5469C9;"  align="left">{{resume_header.url_text}}
+                    </td>
+                </tr>
+                {% endif %}
+
+            
+                </table>
+            </td>
+    </tr>
+    </table>
+
+    
+    
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr style="height:1px; background-color: #dee2e6;">
+            <td width="100%">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td width="20%">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td >
+                            <img style="width: 120px; height: 120px; border-radius: 100px;" src="https://{{site_name}}{{resume_about.image.url}}">
+                        </td>
+                    </tr>
+                </table>
+                </td>
+
+                <td width="80%">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td style="font-family:Verdana, Geneva, sans-serif; font-size:12px;">
+                                {{resume_about.about}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+        </tr>
+        <td>&nbsp;</td>
+    </table>
+
+
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr style="height:1px; background-color: #dee2e6;">
+            <td width="100%">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        
+    </table>
+
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+        
+        <tr>
+            <td width="70%" style="border-right:1px solid #dee2e6 ;margin-right: 10px;">
+
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="top: 0;">
+                    <tr>
+                        <td width="100%">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:18px; color:#173b6c;">WORK EXPERIENCES</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        {% for work_exper in work_exper %}
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="100%">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="68%" style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:15px;">{{work_exper.title}}</td>
+                            <td width="32%" style="font-family:Verdana, Geneva, sans-serif; font-size:9px;color: #6c757d;" align="right">{{work_exper.company_name}}|{{work_exper.duration}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+            <td width="100%">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="font-family:Verdana, Geneva, sans-serif; font-size:12px;">
+                        {{work_exper.content|linebreaks}}
+                    </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </table>
+        {% endfor %}
+
+        
+
+
+    <!-- 
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 20px;">
+                <tr>
+                    <td width="100%">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:18px; color:#173b6c;">PROJECTS</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table> -->
+
+
+
+
+
+            </td>
+    
+
+
+
+        
+            <td width="30%" style="margin-left:20px ;" valign="top">
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:18px; color:#173b6c;">SKILLS</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 20px;">
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:15px;">Technical</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" align="left">
+                            {{resume_technical_skills.skills}}
+                        </td>
+                    </tr>
+                </table>
+
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 20px;">
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:15px;">Professional</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" align="left">
+                        {{resume_professional_skills.skills}}
+                        </td>
+                    </tr>
+                </table>
+
+
+
+
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 20px;margin-bottom: 20px;">
+                    <tr>
+                        <td>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:18px; color:#173b6c;">EDUCATION</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" align="left">
+                        {% for resume_educations in resume_educations %}
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
+                            <tr>
+                                <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:13px;">{{resume_educations.university}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-family:Verdana, Geneva, sans-serif; font-size:12px;color: #6c757d;">{{resume_educations.subject}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-family:Verdana, Geneva, sans-serif; font-size:12px;color: #6c757d;">{{resume_educations.year}}</td>
+                            </tr>
+                        </table>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+
+
+
+
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 20px;margin-bottom: 20px;">
+                        <tr>
+                            <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:18px; color:#173b6c;">LANGUAGES</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" align="left">
+                                {% for resume_langs in resume_langs %}
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
+                                    <tr>
+                                        <td>
+                                            <span style="font-family:Verdana, Geneva, sans-serif; font-size:13px;">{{resume_langs.language}}</span>
+                                            <span style="font-family:Verdana, Geneva, sans-serif; font-size:12px;color: #6c757d;">({{resume_langs.language_level}})</span>
+                                        </td>
+                                    </tr>
+                                    
+                                </table>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 20px;margin-bottom: 15px;">
+                        <tr>
+                            <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:18px; color:#173b6c;">INTERESTS</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    </table>
+
+
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td style="font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px;" align="left">  
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    
+                                    <tr>
+                                        <td>
+                                            {% for resume_interest in resume_interest.splits %}
+                                            <span style="font-family:Verdana, Geneva, sans-serif; font-size:13px;">{{resume_interest}} /</span>
+                                            {% endfor %}          
+                                        </td>
+                                    </tr>  
+                                    
+                                </table>      
+                            </td>
+                        </tr>
+                    </table>
+
+
+            </td>
+        </tr>
+
+
+    </table>
+
+
+
+
+</body>
+</html>

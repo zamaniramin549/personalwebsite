@@ -1,0 +1,144 @@
+{% extends 'dashboard/master.html' %}
+{% load static %}
+
+{% block title %}Dashboard | Edit {{blog.title}}{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+
+    <!-- Navbar -->
+    {% include "dashboard/includes/top_navbar.html" %}
+    <!-- Main Sidebar Container -->
+    {% include "dashboard/includes/left_navbar.html" %}
+    
+  
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Edit {{blog.title}}</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashbaord</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'viewblog' %}">View blog</a></li>
+                <li class="breadcrumb-item active">Edit {{blog.title}}</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+  
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                   
+                   
+                        <form method="post" action="{% url 'editblog' blog.slug %}" enctype="multipart/form-data">{% csrf_token %}
+                          <div class="row">
+                              <div class="col-md-6">
+                                <input class="form-control mb-3" type="text" name="title" placeholder="title *" value="{{blog.title}}" required>
+                              </div>
+                              <div class="col-md-6">
+                                <input class="form-control mb-3" type="text" name="short_description" value="{{blog.short_content}}" placeholder="Short description *" required>   
+                              </div>
+                              <div class="col-md-6">
+                                <select class="form-control mb-3" name="category">
+                                  <option value="{{blog.category.pk}}">{{blog.category}}</option>
+                                  {% for category in categories %}
+                                    <option value="{{category.pk}}">{{category.category_name}}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" name="active" id="defaultCheck1" {% if blog.status %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Make it as active
+                                  </label>
+                                </div>
+                              </div>
+                          </div>
+                          <textarea class="form-control mb-3 textarea" name="description" placeholder="Description*" rows="4" required>{{blog.content}}</textarea>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="input-group">
+                                <div class="custom-file">
+                                  <input name="image" type="file" class="custom-file-input" id="file" onchange="loadFile(event)" accept="Image/*">
+                                  <label class="custom-file-label" for="file">Choose an image</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <b>Selected image</b>
+                                </div>
+                                <div class="col-md-12">
+                                  <img class="mt-3" id="output" width="200" />
+                                </div>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <b>Uploaded image</b>
+                              </div>
+                              <div class="col-md-12">
+                                <img src="{{blog.image.url}}" class="mt-3" width="200" />
+                              </div>
+                            </div>
+                          </div>
+                          </div>  
+                          <button class="btn btn-primary mt-3" type="submit">Save</button>
+                        </form>
+  
+
+
+
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.content -->
+
+
+
+
+    </div>
+
+
+
+  
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+      <div class="p-3">
+        <h5>Title</h5>
+        <p>Sidebar content</p>
+      </div>
+    </aside>
+  
+    <!-- Main Footer -->
+    {% include "dashboard/includes/footer.html" %}
+  </div>
+{% endblock %}
+
+
+
+{% block image %}
+<script>
+    var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+{% endblock %}

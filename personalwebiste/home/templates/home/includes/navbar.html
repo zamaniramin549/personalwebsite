@@ -1,0 +1,57 @@
+{% load static %}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <!-- <h1 class="h4 text-white mt-4">{{about.full_name|title}}</h1> -->
+        <img src="{{navbar_settings.image.url}}" height="150" width="150" class="img-fluid rounded-circle mt-4">
+        <p class="text-white mt-4">
+            {{navbar_settings.about}}
+        </p>
+        <div class="">
+            {% if navbar_settings.git %}
+                <a href="{{navbar_settings.git}}" class="text-white" style="margin-right: 15px;" target="_blank"><i class="fab fa-brands fa-github fa-2x"></i></a>
+            {% endif %}
+            {% if navbar_settings.lin %}
+                <a href="{{navbar_settings.lin}}" class="text-white" style="margin-right: 15px;" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
+            {% endif %}
+            {% if navbar_settings.tw %}
+                <a href="{{navbar_settings.tw}}" class="text-white" style="margin-right: 15px;" target="_blank"><i class="fab fa-twitter-square fa-2x"></i></a>
+            {% endif %}
+            {% if navbar_settings.insta %}
+                <a href="{{navbar_settings.insta}}" class="text-white" style="margin-right: 15px;" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
+            {% endif %}
+            {% if navbar_settings.fb %}
+                <a href="{{navbar_settings.fb}}" class="text-white" style="margin-right: 15px;" target="_blank"><i class="fab fa-facebook-square fa-2x"></i></a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12 text-center d-flex justify-content-center">
+        <span style="width: 100%; height: 1px;background-color: #fff;display: block;margin: 10px;"></span>
+    </div>
+    <div class="col-md-12" style="font-size: 18px;">
+        <ul class="nav flex-column text-start">
+            <li class="nav-item" style="font-size: 16px;">
+                <a class="nav-link text-muted {% if request.path == '/' %} active {% endif %}" href="{% url 'home' %}"><i style="padding: 10px;" class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="nav-item" style="font-size: 16px;">
+                <a class="nav-link text-muted {% if request.path == '/all-projects/' %} active {% endif %}" href="{% url 'allprojects' %}"><i style="padding: 10px;" class="fas fa-project-diagram"></i> Projects</a>
+            </li>
+            <!-- <li class="nav-item" style="font-size: 16px;">
+                <a class="nav-link text-muted" href="#"><i style="padding: 10px;" class="fas fa-university"></i> Tutorial</a>
+            </li> -->
+            <li class="nav-item" style="font-size: 16px;">
+                <a class="nav-link text-muted {% if request.path == '/all-blogs/' %} active {% endif %}" href="{% url 'allblogs' %}"><i style="padding: 10px;" class="fas fa-blog"></i> Blog</a>
+            </li>
+            <li class="nav-item" style="font-size: 16px;">
+                <a class="nav-link text-muted {% if request.path == '/resume/' %} active {% endif %}" href="{% url 'resume' %}"><i style="padding: 10px;" class="fas fa-file"></i> Resume</a>
+            </li>
+            <li class="nav-item" style="font-size: 16px;">
+                <a class="nav-link text-muted {% if request.path == '/contact/' %} active {% endif %}" href="{% url 'contact' %}"><i style="padding: 10px;" class="fas fa-address-book"></i> Contact</a>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item" style="font-size: 16px;">
+                <a class="nav-link text-muted" href="{% url 'dashboard' %}"><i style="padding: 10px;" class="fas fa-tachometer"></i> Dashboard</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
